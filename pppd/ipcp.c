@@ -431,7 +431,7 @@ setipaddr(arg, argv, doit)
 	return 0;
     if (!doit)
 	return 1;
-  
+
     /*
      * If colon first character, then no local addr.
      */
@@ -453,7 +453,7 @@ setipaddr(arg, argv, doit)
 	*colon = ':';
 	prio_local = option_priority;
     }
-  
+
     /*
      * If colon last character, then no remote addr.
      */
@@ -858,7 +858,7 @@ ipcp_addci(f, ucp, lenp)
     ADDCIWINS(CI_MS_WINS1, go->winsaddr[0]);
 
     ADDCIWINS(CI_MS_WINS2, go->winsaddr[1]);
-    
+
     *lenp -= len;
 }
 
@@ -1441,7 +1441,7 @@ ipcp_reqci(f, inp, len, reject_if_disagree)
      * Reset all his options.
      */
     BZERO(ho, sizeof(*ho));
-    
+
     /*
      * Process all his options.
      */
@@ -1551,7 +1551,7 @@ ipcp_reqci(f, inp, len, reject_if_disagree)
 		wo->req_addr = 0;	/* don't NAK with 0.0.0.0 later */
 		break;
 	    }
-	
+
 	    ho->neg_addr = 1;
 	    ho->hisaddr = ciaddr1;
 	    break;
@@ -1595,7 +1595,7 @@ ipcp_reqci(f, inp, len, reject_if_disagree)
 		orc = CONFNAK;
             }
             break;
-	
+
 	case CI_COMPRESSTYPE:
 	    if (!ao->neg_vj ||
 		(cilen != CILEN_VJ && cilen != CILEN_COMPRESS)) {
@@ -1614,7 +1614,7 @@ ipcp_reqci(f, inp, len, reject_if_disagree)
 	    ho->vj_protocol = cishort;
 	    if (cilen == CILEN_VJ) {
 		GETCHAR(maxslotindex, p);
-		if (maxslotindex > ao->maxslotindex) { 
+		if (maxslotindex > ao->maxslotindex) {
 		    orc = CONFNAK;
 		    if (!reject_if_disagree){
 			DECPTR(1, p);
@@ -1808,8 +1808,10 @@ ipcp_up(f)
 	ipcp_close(f->unit, "Could not determine local IP address");
 	return;
     }
-    if (ho->hisaddr == 0 && !noremoteip) {
-	ho->hisaddr = htonl(0x0a404040 + ifunit);
+    if (ho->hisaddr == 0) {
+        // If no remote IP address, set it to same IP address as local instead of a dummpy address
+        // ho->hisaddr = htonl(0x0a404040 + ifunit);
+        ho->hisaddr = go->ouraddr;
 	warn("Could not determine remote IP address: defaulting to %I",
 	     ho->hisaddr);
     }
@@ -1873,7 +1875,7 @@ ipcp_up(f)
 	    }
 
 	    /* assign a default route through the interface if required */
-	    if (ipcp_wantoptions[f->unit].default_route) 
+	    if (ipcp_wantoptions[f->unit].default_route)
 		if (sifdefaultroute(f->unit, go->ouraddr, ho->hisaddr))
 		    default_route_set[f->unit] = 1;
 
@@ -1923,7 +1925,7 @@ ipcp_up(f)
 	sifnpmode(f->unit, PPP_IP, NPMODE_PASS);
 
 	/* assign a default route through the interface if required */
-	if (ipcp_wantoptions[f->unit].default_route) 
+	if (ipcp_wantoptions[f->unit].default_route)
 	    if (sifdefaultroute(f->unit, go->ouraddr, ho->hisaddr))
 		default_route_set[f->unit] = 1;
 
