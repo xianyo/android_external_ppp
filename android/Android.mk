@@ -23,3 +23,21 @@ LOCAL_MODULE := ip-up-vpn
 LOCAL_MODULE_PATH := $(TARGET_OUT_ETC)/ppp
 
 include $(BUILD_EXECUTABLE)
+
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := ip-up-ppp0.c
+LOCAL_SHARED_LIBRARIES := libcutils
+LOCAL_MODULE := ip-up-ppp0
+LOCAL_MODULE_PATH := $(TARGET_OUT_ETC)/ppp
+
+include $(BUILD_EXECUTABLE)
+
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := ip-down-ppp0.c
+LOCAL_SHARED_LIBRARIES := libcutils
+LOCAL_MODULE := ip-down-ppp0
+LOCAL_MODULE_PATH := $(TARGET_OUT_ETC)/ppp
+
+include $(BUILD_EXECUTABLE)
