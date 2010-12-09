@@ -39,4 +39,11 @@ LOCAL_MODULE:= pppd
 
 include $(BUILD_EXECUTABLE)
 
+include $(CLEAR_VARS)
+LOCAL_SRC_FILES := chat.c
+LOCAL_SHARED_LIBRARIES := libcutils
+LOCAL_MODULE := chat
+
+include $(BUILD_EXECUTABLE)
+
 endif
