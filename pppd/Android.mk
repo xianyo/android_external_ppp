@@ -43,5 +43,12 @@ LOCAL_CFLAGS := -fno-short-enums -DCHAPMS=1 -DMPPE=1 -DINET6=1 -DUSE_OPENSSL=1 -
 LOCAL_CFLAGS += -Wno-unused-variable
 
 LOCAL_MODULE:= pppd
+LOCAL_MODULE_TAGS := optional
+include $(BUILD_EXECUTABLE)
 
+include $(CLEAR_VARS)
+LOCAL_SRC_FILES := chat.c
+LOCAL_SHARED_LIBRARIES := libcutils
+LOCAL_MODULE := chat
+LOCAL_MODULE_TAGS := optional
 include $(BUILD_EXECUTABLE)
