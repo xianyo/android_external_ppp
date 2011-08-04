@@ -830,7 +830,7 @@ ipcp_addci(f, ucp, lenp)
 	    neg = 0; \
     }
 
-#define ADDCIWINS(opt, addr) \
+#define ADDCIWINS(opt, addr)                  \
     if (addr) { \
 	if (len >= CILEN_ADDR) { \
 	    u_int32_t l; \
