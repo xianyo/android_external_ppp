@@ -262,7 +262,7 @@ void print_link_stats __P((void));
 
 extern	char	*ttyname __P((int));
 extern	char	*getlogin __P((void));
-int main __P((int, char *[]));
+int main_pppd __P((int, char *[]));
 
 #ifdef ultrix
 #undef	O_NONBLOCK
@@ -309,7 +309,7 @@ struct protent *protocols[] = {
 #endif /* !defined(PPP_DRV_NAME) */
 
 int
-main(argc, argv)
+main_pppd(argc, argv)
     int argc;
     char *argv[];
 {
@@ -636,7 +636,7 @@ main(argc, argv)
 		childwait_end(NULL);
 	}
     }
-
+    info("die status =%d",status);
     die(status);
     return 0;
 }

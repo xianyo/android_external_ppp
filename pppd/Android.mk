@@ -1,6 +1,7 @@
 ifeq ($(TARGET_ARCH),arm)
 
 LOCAL_PATH:= $(call my-dir)
+
 include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES:= \
@@ -27,13 +28,33 @@ LOCAL_SRC_FILES:= \
 	pppox.c
 
 LOCAL_SHARED_LIBRARIES := \
-	libcutils libcrypto
+	libcutils libcrypto libdl
+
+LOCAL_C_INCLUDES := \
+	$(LOCAL_PATH)/include
+
+LOCAL_PRELINK_MODULE := false
+# Force sizeof(enum)=4
+LOCAL_CFLAGS := -fno-short-enums -DANDROID_CHANGES -DCHAPMS=1 -DMPPE=1 -DPLUGIN -Iexternal/openssl/include
+
+LOCAL_MODULE:= libpppd
+LOCAL_MODULE_TAGS := optional
+include $(BUILD_SHARED_LIBRARY)
+
+
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES:= \
+	main_pppd.c
+
+LOCAL_SHARED_LIBRARIES := \
+	libcutils libcrypto libdl libpppd
 
 LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/include
 
 # Force sizeof(enum)=4
-LOCAL_CFLAGS := -fno-short-enums -DANDROID_CHANGES -DCHAPMS=1 -DMPPE=1 -Iexternal/openssl/include
+LOCAL_CFLAGS := -fno-short-enums -DANDROID_CHANGES -DCHAPMS=1 -DMPPE=1 -DPLUGIN -Iexternal/openssl/include
 
 LOCAL_MODULE:= pppd
 LOCAL_MODULE_TAGS := optional
@@ -45,5 +66,7 @@ LOCAL_SHARED_LIBRARIES := libcutils
 LOCAL_MODULE := chat
 LOCAL_MODULE_TAGS := optional
 include $(BUILD_EXECUTABLE)
+
+include $(call all-makefiles-under,$(LOCAL_PATH))
 
 endif

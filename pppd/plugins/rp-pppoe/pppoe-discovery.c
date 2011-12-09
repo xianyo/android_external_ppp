@@ -17,6 +17,7 @@
 
 #include "pppoe.h"
 
+#define VERSION 3.3
 char *xstrdup(const char *s);
 void usage(void);
 
@@ -120,5 +121,5 @@ char *xstrdup(const char *s)
 void usage(void)
 {
     fprintf(stderr, "Usage: pppoe-discovery [options]\n");
-    fprintf(stderr, "\nVersion " VERSION "\n");
+    fprintf(stderr, "\nVersion 3.3\n");
 }

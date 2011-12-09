@@ -48,12 +48,12 @@ static char const RCSID[] =
 #include <signal.h>
 #include <net/ethernet.h>
 #include <net/if_arp.h>
-#include "ppp_defs.h"
-#include "if_ppp.h"
-#include "if_pppox.h"
+#include <linux/ppp_defs.h>
+#include <linux/if_ppp.h>
+#include <linux/if_pppox.h>
 
 #define _PATH_ETHOPT         _ROOT_PATH "/etc/ppp/options."
-
+#define RP_VERSION 3.3
 char pppd_version[] = VERSION;
 
 /* From sys-linux.c in pppd -- MUST FIX THIS! */
@@ -66,7 +66,7 @@ static int printACNames = 0;
 
 static int PPPoEDevnameHook(char *cmd, char **argv, int doit);
 static option_t Options[] = {
-    { "device name", o_wild, (void *) &PPPoEDevnameHook,
+    { "eth0", o_wild, (void *) &PPPoEDevnameHook,
       "PPPoE device name",
       OPT_DEVNAM | OPT_PRIVFIX | OPT_NOARG  | OPT_A2STRVAL | OPT_STATIC,
       devnam},
@@ -288,6 +288,7 @@ PPPoEDevnameHook(char *cmd, char **argv, int doit)
     } else if (strlen(cmd) < 4
 	       || (strncmp(cmd, "eth", 3) && strncmp(cmd, "nas", 3)
 		   && strncmp(cmd, "tap", 3) && strncmp(cmd, "br", 2))) {
+		info("cmd %s",cmd);
 	return 0;
     }
 
@@ -366,8 +367,7 @@ plugin_init(void)
 
     add_options(Options);
 
-    info("RP-PPPoE plugin version %s compiled against pppd %s",
-	 RP_VERSION, VERSION);
+    info("RP-PPPoE plugin version 3.3 compiled against pppd 2.4.3");
 }
 
 /**********************************************************************

@@ -692,7 +692,7 @@ log_write(level, buf)
 #ifndef ANDROID_CHANGES
     syslog(level, "%s", buf);
 
-    fprintf(stderr, buf);
+    fprintf(stderr, "%s",buf);
     
     if (log_to_fd >= 0 && (level != LOG_DEBUG || debug)) {
 	int n = strlen(buf);

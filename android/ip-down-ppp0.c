@@ -56,6 +56,7 @@ void sendNotification()
     {
         __android_log_print(ANDROID_LOG_INFO, "ip-down-ppp0", "cannot connect rild-ppp socket \n");
         close(pppdSocket);
+		return;
     }
 
     memset(snd_buf,0,MAX_PPPD_MSG_LEN);  

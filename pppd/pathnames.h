@@ -55,5 +55,5 @@
 #endif /* __STDC__ */
 
 #ifdef PLUGIN
-#define _PATH_PLUGIN	"/usr/lib/pppd/" VERSION
+#define _PATH_PLUGIN	"/etc/ppp/" VERSION
 #endif /* PLUGIN */
