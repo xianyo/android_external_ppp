@@ -79,6 +79,7 @@
 #include <sys/utsname.h>
 #include <sys/sysmacros.h>
 
+#include <linux/tty.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <syslog.h>
